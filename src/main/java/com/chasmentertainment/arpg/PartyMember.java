@@ -1,15 +1,15 @@
-
+package com.chasmentertainment.arpg;
 /**
- * Abstract class partyMember - write a description of the class here
+ * Abstract class PartyMember - write a description of the class here
  * 
  * @author (your name here)
  * @version (version number or date here)
  */
-public abstract class partyMember
+public abstract class PartyMember
 {
     String name;
     
-    public partyMember(String name)
+    public PartyMember(String name)
     {
         this.name=name;
     }

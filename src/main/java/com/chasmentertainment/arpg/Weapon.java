@@ -1,4 +1,4 @@
-
+package com.chasmentertainment.arpg;
 /**
  * Write a description of class Weapon here.
  * 

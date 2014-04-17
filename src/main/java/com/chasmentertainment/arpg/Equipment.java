@@ -1,4 +1,4 @@
-
+package com.chasmentertainment.arpg;
 /**
  * Abstract class Equipment - write a description of the class here
  * 

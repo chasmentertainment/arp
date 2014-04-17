@@ -1,14 +1,13 @@
-
+package com.chasmentertainment.arpg;
 /**
  * Write a description of class Warrior here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Warrior extends partyMember
+public class Warrior extends PartyMember
 {
     // instance variables - replace the example below with your own
-    String name;
     int maxHP=30;
     int currentHP=30;
     int maxMana=20;

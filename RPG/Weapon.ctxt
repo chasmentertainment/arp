@@ -1,8 +1,0 @@
-#BlueJ class context
-comment0.params=name\ attackValue\ element\ ability\ isElemental
-comment0.target=Weapon(java.lang.String,\ int,\ int,\ int,\ boolean)
-comment1.params=name\ attackValue\ spellPower\ ability
-comment1.target=Weapon(java.lang.String,\ int,\ int,\ int)
-comment2.params=
-comment2.target=java.lang.String\ toString()
-numComments=3
