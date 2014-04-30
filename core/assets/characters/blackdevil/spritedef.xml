@@ -1,0 +1,17 @@
+<sprite sheet="characters/blackdevil/spritesheet.png" type="explicit">
+    <animation name="idle">
+        <frame x="0"    y="0"   width="100" height="100"/>
+        <frame x="100"  y="0"   width="100" height="100"/>
+        <frame x="200"  y="0"   width="100" height="100"/>
+    </animation>
+    <animation name="casting">
+        <frame x="0"    y="100" width="120" height="120"/>
+        <frame x="120"  y="100" width="120" height="120"/>
+        <frame x="240"  y="100" width="120" height="120"/>
+    </animation>
+    <animation name="transform">
+        <frame x="0"    y="220" width="70" height="70"/>
+        <frame x="70"   y="220" width="70" height="70"/>
+        <frame x="140"  y="220" width="70" height="70"/>
+    </animation>
+</sprite>

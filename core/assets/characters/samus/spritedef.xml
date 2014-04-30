@@ -1,0 +1,14 @@
+<sprite sheet="characters/samus/fusionsuit.png" type="cells" columns="8" rows="45">
+    <animation name="standFace">
+        <frameset type="wrap" startRow="0" startCol="0" endRow="0" endCol="1"/>
+    </animation>
+    <animation name="useBack">
+        <frameset type="wrap" startRow="1" startCol="0" endRow="1" endCol="6"/>
+    </animation>
+    <animation name="turnLeft">
+        <frameset type="box" startRow="6" startCol="3" endRow="10" endCol="3"/>
+    </animation>
+    <animation name="turnRight">
+        <frameset type="box" startRow="6" startCol="4" endRow="10" endCol="4"/>
+    </animation>
+</sprite>

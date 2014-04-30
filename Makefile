@@ -1,8 +1,12 @@
 all:
 
 run:
-	gradle run
+	gradlew -q desktop:run
 test:
-	gradle test
+	gradlew desktop:test
 clean:
-	gradle clean
+	gradlew desktop:clean
+package:
+	gradlew desktop:dist
+debug-run:
+	gradlew desktop:run --debug
