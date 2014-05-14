@@ -11,6 +11,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.awt.*;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,12 +22,14 @@ import java.util.List;
  */
 public class SpriteDef {
 
+    // XML tag names <xxx ...>
     static final String TAG_NAME_SPRITE = "sprite";
     static final String TAG_NAME_SPRITE_ANIMATION = "animation";
     static final String TAG_NAME_SPRITE_STILL = "still";
     static final String TAG_NAME_SPRITE_FRAME = "frame";
     static final String TAG_NAME_SPRITE_FRAMESET = "frameset";
 
+    // XML tag attribute names <... xxx="...">
     static final String ATTRIBUTE_SPRITE_ANIMATION_NAME = "name";
     static final String ATTRIBUTE_SPRITE_SHEET_FILENAME = "sheet";
     static final String ATTRIBUTE_SPRITE_FRAME_TYPE = "type";
@@ -42,9 +45,8 @@ public class SpriteDef {
     static final String ATTRIBUTE_SPRITE_FRAMESET_END_ROW = "endRow";
     static final String ATTRIBUTE_SPRITE_FRAMESET_END_COL = "endCol";
 
-
-    private HashMap<String, AnimationDef> mAnimations = new HashMap<String, AnimationDef>();
-    private HashMap<String, StillFrame> mStills = new HashMap<String, StillFrame>();
+    private HashMap<String, List<Rectangle>> mAnimations = new HashMap<String, List<Rectangle>>();
+//    private HashMap<String, StillFrame> mStills = new HashMap<String, StillFrame>();
 
     private String mFilename;
     private WeakReference<Texture> mTexture;
@@ -86,7 +88,6 @@ public class SpriteDef {
 
     public SpriteDef(String filename) {
         FileHandle file = Gdx.files.local(filename);
-//        if (file.exists()) {
             try {
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
@@ -100,7 +101,7 @@ public class SpriteDef {
 
                 if (frameType.equals(SpriteSheetType.Explicit.getType())) {
                     mSheetType = SpriteSheetType.Explicit;
-                } else if (frameType.equals(SpriteSheetType.Cells.getType())) {
+                } else if ( frameType.equals(SpriteSheetType.Cells.getType()) ){
                     mSheetType = SpriteSheetType.Cells;
                     mColumns = Integer.parseInt(doc.getFirstChild().getAttributes().getNamedItem(ATTRIBUTE_SPRITE_CELLS_COLUMNS).getNodeValue());
                     mRows = Integer.parseInt(doc.getFirstChild().getAttributes().getNamedItem(ATTRIBUTE_SPRITE_CELLS_ROWS).getNodeValue());
@@ -117,26 +118,21 @@ public class SpriteDef {
                     Node node = animationNodes.item(i);
                     String name = node.getAttributes().getNamedItem(ATTRIBUTE_SPRITE_ANIMATION_NAME).getNodeValue();
                     if (name != null) {
-                        AnimationDef anim = parseAnimation(node);
+                        List<Rectangle> anim = parseAnimation(node);
                         if (anim != null) {
                             mAnimations.put(name, anim);
                         }
                     }
                 }
 
-//                for (int i = 0; i < nodes.getLength(); i++) {
-//                    Node node = nodes.item(i);
-//
-//                }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//        }
     }
 
-    private StillFrame parseFrame(Node frameNode) {
-        StillFrame frame = null;
+    private Rectangle parseFrame(Node frameNode) {
+        Rectangle frame = null;
         if (frameNode.getNodeName().equals(TAG_NAME_SPRITE_FRAME)) {
             int x,y,width,height;
             NamedNodeMap attributes = frameNode.getAttributes();
@@ -144,14 +140,14 @@ public class SpriteDef {
             y = Integer.parseInt(attributes.getNamedItem(ATTRIBUTE_SPRITE_FRAME_Y).getNodeValue());
             width = Integer.parseInt(attributes.getNamedItem(ATTRIBUTE_SPRITE_FRAME_WIDTH).getNodeValue());
             height = Integer.parseInt(attributes.getNamedItem(ATTRIBUTE_SPRITE_FRAME_HEIGHT).getNodeValue());
-            frame = new StillFrame(x, y, width, height);
+            frame = new Rectangle(x, y, width, height);
         }
 
         return frame;
     }
 
-    private AnimationDef parseAnimation(Node animationNode) {
-        AnimationDef animDef = new AnimationDef();
+    private ArrayList<Rectangle> parseAnimation(Node animationNode) {
+        ArrayList<Rectangle> animDef = new ArrayList<Rectangle>();
         String name;
         name = animationNode.getAttributes().getNamedItem(ATTRIBUTE_SPRITE_ANIMATION_NAME).getNodeValue();
         if (name != null) {
@@ -159,13 +155,13 @@ public class SpriteDef {
                 Node frameNode = animationNode.getChildNodes().item(j);
 
                 if (frameNode.getNodeName().equals(TAG_NAME_SPRITE_FRAME)) {
-                    StillFrame frame = parseFrame(frameNode);
+                    Rectangle frame = parseFrame(frameNode);
                     if (frame != null) {
-                        animDef.addFrame(frame);
+                        animDef.add(frame);
                     }
                 } else if (frameNode.getNodeName().equals(TAG_NAME_SPRITE_FRAMESET)) {
-                    List<StillFrame> frames = parseFrameset(frameNode);
-                    animDef.addFrames(frames);
+                    List<Rectangle> frames = parseFrameset(frameNode);
+                    animDef.addAll(frames);
                 }
 
 
@@ -183,8 +179,8 @@ public class SpriteDef {
         return getTexture().getHeight()/mRows;
     }
 
-    private List<StillFrame> parseFrameset(Node framesetNode) {
-        ArrayList<StillFrame> frames = new ArrayList<StillFrame>();
+    private List<Rectangle> parseFrameset(Node framesetNode) {
+        ArrayList<Rectangle> frames = new ArrayList<Rectangle>();
 
         String framesetType = framesetNode.getAttributes().getNamedItem(ATTRIBUTE_SPRITE_FRAMESET_TYPE).getNodeValue();
 
@@ -206,7 +202,7 @@ public class SpriteDef {
                             int height = getFrameHeight();
                             int x = j * width;
                             int y = i * height;
-                            StillFrame f = new StillFrame(x, y, width, height);
+                            Rectangle f = new Rectangle(x, y, width, height);
                             frames.add(f);
                         }
                     }
@@ -220,7 +216,7 @@ public class SpriteDef {
                             int height = getFrameHeight();
                             int x = j * width;
                             int y = i * height;
-                            StillFrame f = new StillFrame(x, y, width, height);
+                            Rectangle f = new Rectangle(x, y, width, height);
                             frames.add(f);
                         }
                     }
@@ -233,7 +229,7 @@ public class SpriteDef {
                             int height = getFrameHeight();
                             int x = j * width;
                             int y = i * height;
-                            StillFrame f = new StillFrame(x, y, width, height);
+                            Rectangle f = new Rectangle(x, y, width, height);
                             frames.add(f);
                         }
                     }
@@ -244,7 +240,7 @@ public class SpriteDef {
                             int height = getFrameHeight();
                             int x = j * width;
                             int y = i * height;
-                            StillFrame f = new StillFrame(x, y, width, height);
+                            Rectangle f = new Rectangle(x, y, width, height);
                             frames.add(f);
                         }
                     }
@@ -255,33 +251,30 @@ public class SpriteDef {
         return frames;
     }
 
+    /*  Create gets an animation from the file this object was created with. If the animation has
+        already been created, use the old animation, otherwise create one.
+     */
     public Animation getAnimationNamed(String name) {
         Animation anim = null;
 
-        AnimationDef def = mAnimations.get(name);
+        List<Rectangle> def = mAnimations.get(name);
         if (def != null) {
-            anim = AnimationDef.makeAnimation(getTexture(), def);
+            anim = AnimationFactory.makeAnimation(getTexture(), def);
         }
 
         return anim;
     }
 
+    /*  returns the texture specified by the filename.
+
+     */
     public Texture getTexture() {
         if (mTexture != null) {
             return mTexture.get();
-//            return mTexture;
         }
 
         Texture t = new Texture(mFilename);
         mTexture = new WeakReference<Texture>(t);
-//        mTexture = t;
         return t;
     }
-//
-//    public void getSpriteNamed(String name) {
-//
-//    }
-
-//    public void getSpriteFromAnimationFrame() {}
-
 }
