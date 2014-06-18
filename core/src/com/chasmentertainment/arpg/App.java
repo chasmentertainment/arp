@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.chasmentertainment.arpg.com.chasmentertainment.arpg.util.SpriteDef;
+import com.chasmentertainment.arpg.AnimationParser.SpriteDef;
 
 public class App extends ApplicationAdapter
 {

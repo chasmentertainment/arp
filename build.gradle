@@ -39,9 +39,11 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
+//    systemProperty "java.library.path", "C:/zmq/java/lib"
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile "org.zeromq:jeromq:0.3.4"
     }
 }

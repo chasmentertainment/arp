@@ -1,4 +1,4 @@
-package com.chasmentertainment.arpg.com.chasmentertainment.arpg.util;
+package com.chasmentertainment.arpg.AnimationParser;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;

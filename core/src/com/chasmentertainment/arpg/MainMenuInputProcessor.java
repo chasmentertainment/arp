@@ -2,6 +2,7 @@ package com.chasmentertainment.arpg;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.chasmentertainment.arpg.networking.NetworkingTester;
 
 public class MainMenuInputProcessor implements InputProcessor {
     protected App app;
@@ -35,6 +36,19 @@ public class MainMenuInputProcessor implements InputProcessor {
     @Override
     public boolean keyDown (int keycode) {
         keysDown[keycode] = true;
+
+        if (keycode == Input.Keys.ENTER) {
+            try {
+//                NetworkingTester.test();
+//                NetworkingTester.testReqRep();
+//                NetworkingTester.testPubSub();
+//                NetworkingTester.testPipeline();
+//                NetworkingTester.testExclusivePair();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         updateAnimations();
 
         return false;
