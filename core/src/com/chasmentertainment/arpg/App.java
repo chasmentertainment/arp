@@ -45,7 +45,7 @@ public class App extends ApplicationAdapter
     @Override
 	public void create () {
 
-        SpriteDef blackDevilDef = new SpriteDef("characters/blackdevil/spritedef.xml");
+//        SpriteDef blackDevilDef = new SpriteDef("characters/blackdevil/spritedef.xml");
         SpriteDef samus = new SpriteDef("characters/samus/spritedef.xml");
 
         samusStand = samus.getAnimationNamed("standFace");
@@ -64,7 +64,16 @@ public class App extends ApplicationAdapter
 //		gl.glClearColor(0.1f, 0.0f, 0.0f, 1);
 //		gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 //
+        /* Load map from file:
+         *   Generate static game objects
+         *   Load enemies
+         *   Load character from save file / create new
+         *   Add character to game world
+         */
+//        Gamespace gamespace = Gamespace.createFromFile("mapfile.map");
 
+//        Gamespace gamespace = new StartingAreaGamespace();
+//        gamespace.addCharacter(new Warrior("Tyler"));
 	}
 //  ===============================================================
 	@Override

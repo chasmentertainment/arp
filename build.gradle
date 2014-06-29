@@ -4,11 +4,13 @@ buildscript {
         mavenLocal()
     }
     dependencies {
+
     }
 }
 
 allprojects {
     apply plugin: "idea"
+    apply plugin: "maven"
 
     version = '1.0'
     ext {
@@ -38,8 +40,6 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java"
-
-//    systemProperty "java.library.path", "C:/zmq/java/lib"
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
